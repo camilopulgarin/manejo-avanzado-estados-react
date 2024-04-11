@@ -1,13 +1,34 @@
 import React from "react";
+import { Loading } from "./Loading";
 
 class ClassState extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            error: true
+            error: true,
+            loading: false
         }
     }
+
+    UNSAFE_componentWillMount() {
+        console.log("componentWillMount")
+    }
+
+    componentDidMount() {
+        console.log("componentDidMount")
+
+    }
+
+    componentDidUpdate() {
+        console.log("Actualizacion")
+        if (!!this.state.loading) {
+            setTimeout(() => {
+                this.setState({ loading: false })
+            }, 3000)
+        }
+    }
+
     render() {
         return (
             <div>
@@ -17,9 +38,13 @@ class ClassState extends React.Component {
                     <p>Error: el código es incorrecto </p>
                 )}
 
+                {this.state.loading && (
+                    <Loading />
+                )}
+
                 <input />
                 <button
-                    onClick={() => this.setState({ error: !this.state.error })}
+                    onClick={() => this.setState({ loading: true })}
                 >
                     Comprobar
                 </button>
